@@ -71,8 +71,6 @@ if __name__ == '__main__':
     options_file = args.options_file
     weight_file = args.weights_file
 
-    elmo = Elmo(options_file, weight_file, 2, dropout=0)
-
     # use batch_to_ids to convert sentences to character ids
     train_phrases_raw = OrderedDict()
     train_phrases = list()
@@ -96,9 +94,6 @@ if __name__ == '__main__':
     sentences = [phrase.split() for phrase in train_phrases_string]
     character_ids = batch_to_ids(sentences)
 
-    features = elmo(character_ids)
-    features = features['elmo_representations'][0]
-
     label_raw = train_phrases_labels
     label_encoded = label_encoder.fit_transform(label_raw)
     label_one_hot = one_hot_encoder.fit_transform(label_encoded.reshape(-1, 1)).toarray()
@@ -109,13 +104,13 @@ if __name__ == '__main__':
     val_length = length - train_length
 
     features = torch.mean(features, dim=1)
-    train_features, val_features = torch.split(features.float(), [train_length, val_length], dim=0)
+    train_features, val_features = torch.split(character_ids, [train_length, val_length], dim=0)
     train_label, val_label = torch.split(label, [train_length, val_length], dim=0)
 
     input_dim = args.elmo_dimensions
     label_dim = 2
 
-    model = classifier.Classifier(input_dim, label_dim)
+    model = classifier.Classifier(input_dim, label_dim, options_file, weight_file)
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     lr_scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', verbose=False, patience=10, factor=0.5)
 
@@ -214,12 +209,8 @@ if __name__ == '__main__':
     sentences = [phrase.split() for phrase in phrases_string]
     character_ids = batch_to_ids(sentences)
 
-    features = elmo(character_ids)
-    features = features['elmo_representations'][0]
-    features = torch.mean(features, dim=1)
-
     test_labels = torch.zeros((len(features), 1))
-    model = classifier.Classifier(args.elmo_dimensions, 2)
+    model = classifier.Classifier(args.elmo_dimensions, label_dim, options_file, weight_file)
 
     if args.cuda and torch.cuda.is_available():
         device = torch.device("cuda")
@@ -232,7 +223,7 @@ if __name__ == '__main__':
     model.to(device)
     model.eval()
 
-    test_dataset = TensorDataset(features, test_labels)
+    test_dataset = TensorDataset(character_ids, test_labels)
     test_data_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False)
     predicted_scores = torch.zeros(len(features))
     with torch.no_grad():
