@@ -224,7 +224,7 @@ if __name__ == '__main__':
 
     test_dataset = TensorDataset(character_ids, test_labels)
     test_data_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False)
-    predicted_scores = torch.zeros(len(features))
+    predicted_scores = torch.zeros(len(character_ids))
     with torch.no_grad():
         loss = 0
         for i, (features, label) in enumerate(test_data_loader):
