@@ -208,7 +208,7 @@ if __name__ == '__main__':
     sentences = [phrase.split() for phrase in phrases_string]
     character_ids = batch_to_ids(sentences)
 
-    test_labels = torch.zeros((len(features), 1))
+    test_labels = torch.zeros((len(character_ids), 1))
     model = classifier.Classifier(args.elmo_dimensions, label_dim, options_file, weight_file)
 
     if args.cuda and torch.cuda.is_available():
