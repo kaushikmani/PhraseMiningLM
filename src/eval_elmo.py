@@ -103,7 +103,6 @@ if __name__ == '__main__':
     train_length = int(0.8 * length)
     val_length = length - train_length
 
-    features = torch.mean(features, dim=1)
     train_features, val_features = torch.split(character_ids, [train_length, val_length], dim=0)
     train_label, val_label = torch.split(label, [train_length, val_length], dim=0)
 
