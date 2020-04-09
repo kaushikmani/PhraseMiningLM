@@ -1,10 +1,33 @@
-# ClinPhrase: Extracting Quality Phrases from Clinical Documents
+# Phrase Mining on Clinical Documents with Language Models
+
+This repository contains the source code and models for our work on a system to easily and efficiently extract quality and meaningful phrases from clinical documents with limited amount of training data. We use deep neural network based language models such as [BERT](https://arxiv.org/abs/1810.04805) and [ELMO](https://arxiv.org/abs/1802.05365) to extract a set of quality phrases.
 
 ## 1. Introduction
 
-This repository contains the source code and models for our paper, a system to easily and efficiently extract quality and meaningful phrases from clinical documents with limited amount of training data. We use deep neural network based language models such as BERT to extract a set of quality phrases.
+A vast amount of vital clinical data is available within unstructured texts such as discharge summaries and procedure notes in Electronic Medical Records (EMRs). Automatically transforming such unstructured data into structured units is crucial for effective data analysis in the field of clinical informatics. Recognizing phrases which reveal important medical information in a concise and thorough manner is a fundamental step in this process. We adapt domain-specific deep neural network based language models to effectively and efficiently extract high-quality phrases from clinical documents with limited amount of training data, outperforming the current state-of-the-art techniques in performance and efficiency. In addition, our model trained on the MIMIC-III [Johnson et. al](https://www.nature.com/articles/sdata201635) dataset can be directly applied to a new corpus and it still achieves the best performance among all methods, which shows its great generalizability and can save tremendous labeling effort on the new dataset. The following figure shows architecture of our pipeline. 
 
-## 2. Requirements
+![Architecture of our pipeline](/images/architecture.pdf)
+
+Given a set of clinical documents as input, frequent phrases are extracted from the documents as phrase candidates and features are extracted using a language model for all the phrases to measure the quality of a phrase based on its relevance in the clinical context. These features are then fine-tuned with a classifier, which predicts quality phrases.
+
+## 2. Performance
+
+We compare different language models with open and clinical domain methods such as AutoPhrase, SegPhrase, QuickUMLS and SciSpaCy. Clinical BERT initialized with BioBERT weights and pre-trained on discharge summaries of MIMIC III notes performs the best among all models, however the performance of other BERT based models are comparable. The following table shows performance results of different methods on the MIMIC-III dataset.
+
+![Comparison of performance of different methods on the MIMIC-III dataset](/images/performance.png)
+
+Eventhough open-domain methods outperform our method in terms of efficiency, it is much faster than methods in the clinical domain and gives much better performance. We do not consider the pre-training time of language models, since they can be trained offline and do not need to be trained for every dataset. The following table shows the efficiency results of different
+methods on the MIMIC-III dataset.
+
+![Comparison of efficiency of different methods on the MIMIC-III dataset](/images/efficiency.png)
+
+
+## 3. Experiments
+
+### Requirements
+
+We use the following languages and libraries to run our code.
+
 - python - 3.7.3
 - pytorch - 1.0.0
 - scikit-learn - 0.20.3
@@ -14,13 +37,6 @@ This repository contains the source code and models for our paper, a system to e
 - transformers - 2.5.1
 - allennlp - 0.9.0
 
- 
-### Parameters
-
-        RAW_TEXT - Raw Text is the input for our model, where each line is a single document.
-        TRAIN - Set TRAIN to 0 to extract phrases based on a model fine-tuned on another dataset.
- 
-Other parameters are important for fine-tuning your own model and are explained below.
 
 ## 4. Training your own model for your dataset:
 
@@ -32,6 +48,7 @@ Other parameters are important for fine-tuning your own model and are explained 
  
       RAW_TEXT - Raw Text is the input file, where each line is a single document.
       LABELED_FILE - Labeled file is the labeled data for training, where each line is a phrase. 
+      TRAIN - Set TRAIN to 1 to train your model on a new dataset, otherwise 0.
 
 In the labeled file, the phrases and labels must be seperated by a tab(\t) and should be in lowercase. We recommend running the file frequent_ngram_gen.py to extract the frequent N-grams in the input file. This can be done using:
   
