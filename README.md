@@ -6,7 +6,7 @@ This repository contains the source code and models for our work on a system to 
 
 A vast amount of vital clinical data is available within unstructured texts such as discharge summaries and procedure notes in Electronic Medical Records (EMRs). Automatically transforming such unstructured data into structured units is crucial for effective data analysis in the field of clinical informatics. Recognizing phrases which reveal important medical information in a concise and thorough manner is a fundamental step in this process. We adapt domain-specific deep neural network based language models to effectively and efficiently extract high-quality phrases from clinical documents with limited amount of training data, outperforming the current state-of-the-art techniques in performance and efficiency. In addition, our model trained on the MIMIC-III [Johnson et. al](https://www.nature.com/articles/sdata201635) dataset can be directly applied to a new corpus and it still achieves the best performance among all methods, which shows its great generalizability and can save tremendous labeling effort on the new dataset. The following figure shows architecture of our pipeline. 
 
-![Architecture of our pipeline](/images/architecture.pdf)
+![Architecture of our pipeline](/images/architecture.png)
 
 Given a set of clinical documents as input, frequent phrases are extracted from the documents as phrase candidates and features are extracted using a language model for all the phrases to measure the quality of a phrase based on its relevance in the clinical context. These features are then fine-tuned with a classifier, which predicts quality phrases.
 
