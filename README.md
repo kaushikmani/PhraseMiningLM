@@ -82,8 +82,13 @@ We also provide a fine-tuned ClinicalBERT by [Alsentzer et al., 2019](https://ww
 We have also provided scripts to run ELMo(eval_elmo.py) and BERT(eval_bert.py) models on a simple training and testing set. 
 
 
-If you have any questions, please feel free to contact us!
+If you have any questions, please feel free to contact us @ [m.kaushik93@gmail.com](m.kaushik93@gmail.com), [yue.149@buckeyemail.osu.edu](yue.149@buckeyemail.osu.edu) or [sun.397@osu.edu](sun.397@osu.edu]) !
 
 ## 4. Citation
 
-Please contact the authors for citation.
+@article{,
+  title={Phrase Mining on Clinical Documents with Language Models},
+  author={Kaushik Mani, Xiang Yue, Bernal Jimenez, Yungui Huang, Simon Lin and Huan Sun},
+  journal={AMIA Annual Symposium (Under review)},
+  year={2020}
+}
