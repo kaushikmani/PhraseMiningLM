@@ -86,7 +86,7 @@ If you have any questions, please feel free to contact us @ [m.kaushik93@gmail.c
 
 ## 4. Citation
 
-@article{,
+@article{
   title={Phrase Mining on Clinical Documents with Language Models},
   author={Kaushik Mani, Xiang Yue, Bernal Jimenez, Yungui Huang, Simon Lin and Huan Sun},
   journal={AMIA Annual Symposium (Under review)},
