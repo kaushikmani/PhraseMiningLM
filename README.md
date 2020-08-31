@@ -89,6 +89,5 @@ If you have any questions, please feel free to contact us!
 @inproceedings{ <br />
   title={Phrase Mining on Clinical Documents with Language Models}, <br />
   author={Kaushik Mani ([m.kaushik93@gmail.com](m.kaushik93@gmail.com)), Xiang Yue, ([yue.149@buckeyemail.osu.edu](yue.149@buckeyemail.osu.edu)), Bernal Jimenez, Yungui Huang, Simon Lin and Huan Sun ([sun.397@osu.edu](sun.397@osu.edu])}, <br />
-  publisher={AMIA Annual Symposium (Under review)}, <br />
   year={2020} <br />
 }
